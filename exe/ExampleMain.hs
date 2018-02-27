@@ -22,7 +22,7 @@ import Data.Time.LocalTime.TimeZone.Series
 import Prelude
 import System.Directory
 import TextShow
-import System.Posix.Env
+import System.Environment
 import Text.Read (readMaybe)
 import qualified Data.ByteString.Lazy as LBS
 import qualified Data.HashMap.Strict as HashMap
@@ -51,8 +51,8 @@ setupLogs = do
 main :: IO ()
 main = do
   setupLogs
-  localEnv <- getEnvDefault "TZDIR" "/usr/share/zoneinfo/"
-  tzs <- loadTimeZoneSeries localEnv
+  maybeEnv <- lookupEnv "TZDIR"
+  tzs <- loadTimeZoneSeries $ fromMaybe "/usr/share/zoneinfo/" maybeEnv
   quickHttpServe $
     ifTop (writeBS "quack!") <|>
     route
