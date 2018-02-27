@@ -892,6 +892,7 @@ executable duckling-example-exe
                      , timezone-olson        >= 0.1.7 && < 0.2
                      , timezone-series
                      , unordered-containers
+                     , unix
   default-language:    Haskell2010
   default-extensions:  OverloadedStrings
 
